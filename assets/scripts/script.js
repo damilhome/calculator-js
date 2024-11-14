@@ -100,11 +100,20 @@ const displayNumber = (event) => {
     }
 }
 
+const commaToPoint = (text) => {
+    return text.replace(',', '.');
+}
+
+const pointToComma = (num) => {
+    return String(num).replace('.', ',');
+}
+
 const startOperation = (event) => {
     const dataValue = event.target.dataset.value;
     currentOperation = dataValue;
-    num1 = Number(inputOutputDisplay.textContent);
-    updateOperationDisplay(`${num1} ${dataValue}`);
+    num1 = Number(commaToPoint(inputOutputDisplay.textContent));
+    updateOperationDisplay(`${pointToComma(num1)} ${dataValue}`);
+    updateInputOutputDisplay(pointToComma(String(num1)));
     operationCompleted = false;
     operationHappening = true;
     newInput = true;
@@ -112,15 +121,15 @@ const startOperation = (event) => {
 
 const equalOperation = () => {
     if(operationHappening) {
-        num2 = Number(inputOutputDisplay.textContent);
+        num2 = Number(commaToPoint(inputOutputDisplay.textContent));
         const result = operationsObj[currentOperation](num1, num2);
 
         if(result === 'e') {
             return;
         }
     
-        updateOperationDisplay(`${operationsDisplay.textContent} ${num2}`);
-        updateInputOutputDisplay(result);
+        updateOperationDisplay(`${operationsDisplay.textContent} ${pointToComma(num2)}`);
+        updateInputOutputDisplay(pointToComma(result));
         resetOperationVariables();
         operationCompleted = true;
     }
