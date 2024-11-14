@@ -4,7 +4,7 @@ const percentage = document.getElementById('percentage');
 const clearEntry = document.getElementById('clear-entry');
 const clear = document.getElementById('clear');
 const deleteBtn = document.getElementById('delete');
-const oneDividedBy = document.getElementById('one-divided-by');
+const oneDividedByBtn = document.getElementById('one-divided-by');
 const xSquared = document.getElementById('x-squared');
 const squareRootOfX = document.getElementById('square-root-of-x');
 const divide = document.getElementById('divide');
@@ -40,7 +40,7 @@ let num1 = -1;
 let num2 = 0;
 
 const resetInputOutputDisplay = () => {
-    inputOutputDisplay.textContent = '0';
+    updateInputOutputDisplay('0');
 }
 
 const resetDisplay = () => {
@@ -60,8 +60,12 @@ const updateOperationDisplay = (text) => {
     operationsDisplay.textContent = text;
 }
 
+const updateInputOutputDisplay = (text) => {
+    inputOutputDisplay.textContent = text;
+}
+
 const deleteNumber = () => {
-    inputOutputDisplay.textContent = inputOutputDisplay.textContent.slice(0, -1);
+    updateInputOutputDisplay(inputOutputDisplay.textContent.slice(0, -1));
     if(inputOutputDisplay.textContent === '') {
         resetInputOutputDisplay();
     }
@@ -72,9 +76,9 @@ const negateDisplay = () => {
         const i = inputOutputDisplay.textContent.indexOf(',');
         const numberWithoutDecimal = inputOutputDisplay.textContent.slice(0, i);
         const negatedNumber = Number(numberWithoutDecimal) * (-1);
-        inputOutputDisplay.textContent = `${negatedNumber}${inputOutputDisplay.textContent.slice(i, inputOutputDisplay.textContent.length)}`;
+        updateInputOutputDisplay(`${negatedNumber}${inputOutputDisplay.textContent.slice(i, inputOutputDisplay.textContent.length)}`);
     } else {
-        inputOutputDisplay.textContent = Number(inputOutputDisplay.textContent) * (-1);
+        updateInputOutputDisplay(Number(inputOutputDisplay.textContent) * (-1))
     }
 }
 
@@ -86,13 +90,13 @@ const displayNumber = (event) => {
     }
 
     if(inputOutputDisplay.textContent === '0' || newInput) {
-        inputOutputDisplay.textContent = dataValue;
+        updateInputOutputDisplay(dataValue);
         newInput = false;
     } else {
         if(inputOutputDisplay.textContent.includes(',') && dataValue === ','){
             return;
         }
-        inputOutputDisplay.textContent += dataValue;
+        updateInputOutputDisplay(inputOutputDisplay.textContent += dataValue);
     }
 }
 
@@ -116,10 +120,23 @@ const equalOperation = () => {
         }
     
         updateOperationDisplay(`${operationsDisplay.textContent} ${num2}`);
-        inputOutputDisplay.textContent = result;
+        updateInputOutputDisplay(result);
         resetOperationVariables();
         operationCompleted = true;
     }
+}
+
+const oneDividedBy = () => {
+    num1 = 1;
+    num2 = Number(inputOutputDisplay.textContent)
+
+    if(num2 !== 0) {
+        result = operationsObj['/'](num1, num2);
+        updateOperationDisplay(`1 / ${num2}`);
+        updateInputOutputDisplay(result);
+    }
+
+    resetOperationVariables();
 }
 
 clear.addEventListener('click', () => {
