@@ -116,6 +116,9 @@ const pointToComma = (num) => {
 }
 
 const startOperation = (event) => {
+    if(isOperationHappening) {
+        equal.click();
+    }
     const dataValue = event.target.dataset.value;
     currentOperation = dataValue;
     num1 = getInputNumber();
