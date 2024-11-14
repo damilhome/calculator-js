@@ -82,30 +82,35 @@ body {
     color: var(--btn-text-color);
     background-color: var(--operations-bg-color);
 }
-.btn-operations:hover {
-    background-color: var(--operations-hover-bg-color);
-}
-.btn-operations:active {
-    background-color: var(--operations-active-bg-color);
-}
 
 .btn-numbers {
     color: var(--btn-text-color);
     background-color: var(--number-bg-color);
 }
-.btn-numbers:hover {
-    background-color: var(--number-hover-bg-color);
-}
-.btn-numbers:active {
-    background-color: var(--number-active-bg-color);
-}
 
 .equal {
     background-color: var(--equal-bg-color);
 }
-.equal:hover {
-    background-color: var(--equal-hover-bg-color);
-}
-.equal:active {
-    background-color: var(--equal-active-bg-color);
+
+@media (hover: hover) {
+    .btn-operations:hover {
+        background-color: var(--operations-hover-bg-color);
+    }
+    .btn-operations:active {
+        background-color: var(--operations-active-bg-color);
+    }
+    
+    .btn-numbers:hover {
+        background-color: var(--number-hover-bg-color);
+    }
+    .btn-numbers:active {
+        background-color: var(--number-active-bg-color);
+    }
+    
+    .equal:hover {
+        background-color: var(--equal-hover-bg-color);
+    }
+    .equal:active {
+        background-color: var(--equal-active-bg-color);
+    }
 }
