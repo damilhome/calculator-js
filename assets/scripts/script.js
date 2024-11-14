@@ -32,7 +32,7 @@ const operationsObj = {
 };
 
 let isLastOperationCompleted = false;
-let operationHappening = false;
+let isOperationHappening = false;
 let isSecondNumberInput = true;
 let currentOperation = '';
 let num1 = 0;
@@ -56,7 +56,7 @@ const resetDisplay = () => {
 }
 
 const resetOperationVariables = () => {
-    operationHappening = false;
+    isOperationHappening = false;
     isSecondNumberInput = true;
     currentOperation = ''
     num1 = 0;
@@ -122,12 +122,12 @@ const startOperation = (event) => {
     updateOperationDisplay(`${pointToComma(num1)} ${dataValue}`);
     updateInputOutputDisplay(pointToComma(String(num1)));
     isLastOperationCompleted = false;
-    operationHappening = true;
+    isOperationHappening = true;
     isSecondNumberInput = true;
 }
 
 const equalOperation = () => {
-    if(operationHappening) {
+    if(isOperationHappening) {
         num2 = getInputNumber();
         const result = operationsObj[currentOperation](num1, num2);
 
@@ -170,6 +170,20 @@ const squareRootOfX = () => {
     updateOperationDisplay(`√(${inputOutputDisplay.textContent})`);
     updateInputOutputDisplay(pointToComma(result));
     isLastOperationCompleted = true;
+}
+
+const calcPercentage = () => {
+    if(isOperationHappening){
+        if(currentOperation === '/' || currentOperation === '*') {
+            const result = getInputNumber() / 100;
+            updateInputOutputDisplay(result);
+        } else {
+            const result = (getInputNumber() * num1) / 100;
+            updateInputOutputDisplay(result);
+        }
+    } else {
+        resetDisplay();
+    }
 }
 
 clear.addEventListener('click', () => {
