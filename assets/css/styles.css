@@ -1,0 +1,111 @@
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-color: #57A0BC;
+    --results-bg-color: #eee;
+    --btn-text-color: #eee;
+    --number-bg-color: #4B4B4B;
+    --number-hover-bg-color: #414141;
+    --number-active-bg-color: #353535;
+    --operations-bg-color: #777;
+    --operations-hover-bg-color: #6b6b6b;
+    --operations-active-bg-color: #5f5f5f;
+    --equal-bg-color: #2E9A80;
+    --equal-hover-bg-color: #279178;
+    --equal-active-bg-color: #248b73;
+    --text-color: #000;
+    --operation-text-color: #404040; 
+}
+
+body {
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg-color);
+}
+
+.container{
+    width: 500px;
+}
+
+.results {
+    height: 150px;
+    padding: 20px;
+    background-color: var(--results-bg-color);
+    display: flex;
+    flex-direction: column;
+}
+
+.operations {
+    display: flex;
+    justify-content: flex-end;
+    color: var(--operation-text-color);
+    font-size: 1.2rem;
+    margin-top: 10px;
+    /* background-color: #a1a1a1; */
+}
+
+.input-output {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100%;
+    /* background-color: #D7D7D7; */
+    font-size: 3rem;
+}
+
+.btn-container {
+    height: 400px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+}
+
+.btn-styles {
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+.btn-operations {
+    color: var(--btn-text-color);
+    background-color: var(--operations-bg-color);
+}
+.btn-operations:hover {
+    background-color: var(--operations-hover-bg-color);
+}
+.btn-operations:active {
+    background-color: var(--operations-active-bg-color);
+}
+
+.btn-numbers {
+    color: var(--btn-text-color);
+    background-color: var(--number-bg-color);
+}
+.btn-numbers:hover {
+    background-color: var(--number-hover-bg-color);
+}
+.btn-numbers:active {
+    background-color: var(--number-active-bg-color);
+}
+
+.equal {
+    background-color: var(--equal-bg-color);
+}
+.equal:hover {
+    background-color: var(--equal-hover-bg-color);
+}
+.equal:active {
+    background-color: var(--equal-active-bg-color);
+}
