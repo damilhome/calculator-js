@@ -19,11 +19,23 @@ const minus = document.getElementById('minus');
 const one = document.getElementById('one');
 const two = document.getElementById('two');
 const three = document.getElementById('three');
-const add = document.getElementById('add');
+const plus = document.getElementById('plus');
 const negate = document.getElementById('negate');
 const zero = document.getElementById('zero');
 const comma = document.getElementById('comma');
 const equal = document.getElementById('equal');
+const operationsObj = {
+    '+': (num1, num2) => num1 + num2,
+    '-': (num1, num2) => num1 - num2,
+    '*': (num1, num2) => num1 * num2,
+    '/': (num1, num2) => num2 !== 0 ? num1 / num2 : 'e'
+}
+let operationCompleted = false;
+let operationHappening = false;
+let newInput = true;
+let currentOperation = '';
+let num1 = -1;
+let num2 = 0;
 
 const deleteNumber = () => {
     inputOutputDisplay.textContent = inputOutputDisplay.textContent.slice(0, -1);
@@ -37,14 +49,63 @@ const negateDisplay = () => {
     inputOutputDisplay.textContent = Number(inputOutputDisplay.textContent) * (-1)
 }
 
+const resetDisplay = () => {
+    inputOutputDisplay.textContent = '';
+    operationsDisplay.textContent = '';
+}
+
 const displayNumber = (event) => {
-    dataValue = event.target.dataset.value;
-    if(inputOutputDisplay.textContent === '0') {
+    const dataValue = event.target.dataset.value;
+    if(operationCompleted) {
+        resetDisplay()
+        operationCompleted = false;
+    }
+
+    if(inputOutputDisplay.textContent === '0' || newInput) {
         inputOutputDisplay.textContent = dataValue;
+        newInput = false;
     } else {
         if(inputOutputDisplay.textContent.includes(',') && dataValue === ','){
             return;
         }
         inputOutputDisplay.textContent += dataValue;
+    }
+}
+
+const updateOperationDisplay = (text) => {
+    operationsDisplay.textContent = text;
+}
+
+const startOperation = (event) => {
+    const dataValue = event.target.dataset.value;
+    currentOperation = dataValue;
+    num1 = Number(inputOutputDisplay.textContent);
+    updateOperationDisplay(`${num1} ${dataValue}`);
+    operationCompleted = false;
+    operationHappening = true;
+    newInput = true;
+}
+
+const restartOperationVariables = () => {
+    operationCompleted = true;
+    operationHappening = false;
+    newInput = true;
+    currentOperation = ''
+    num1 = 0;
+    num2 = 0;
+}
+
+const equalOperation = () => {
+    if(operationHappening) {
+        num2 = Number(inputOutputDisplay.textContent);
+        const result = operationsObj[currentOperation](num1, num2);
+
+        if(result === 'e') {
+            return;
+        }
+    
+        updateOperationDisplay(`${operationsDisplay.textContent} ${num2}`)
+        inputOutputDisplay.textContent = result;
+        restartOperationVariables()
     }
 }

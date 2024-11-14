@@ -24,23 +24,23 @@
             <button type="button" id="one-divided-by" class="btn-styles btn-operations">¹/×</button>
             <button type="button" id="x-squared" class="btn-styles btn-operations">×²</button>
             <button type="button" id="square-root-of-x" class="btn-styles btn-operations">²√×</button>
-            <button type="button" id="divide" class="btn-styles btn-operations">÷</button>
+            <button type="button" id="divide" class="btn-styles btn-operations" data-value="/" onclick="startOperation(event)">÷</button>
             <button type="button" id="seven" class="btn-styles btn-numbers" data-value="7" onclick="displayNumber(event)">7</button>
             <button type="button" id="eight" class="btn-styles btn-numbers" data-value="8" onclick="displayNumber(event)">8</button>
             <button type="button" id="nine" class="btn-styles btn-numbers" data-value="9" onclick="displayNumber(event)">9</button>
-            <button type="button" id="multiply" class="btn-styles btn-operations">x</button>
+            <button type="button" id="multiply" class="btn-styles btn-operations" data-value="*" onclick="startOperation(event)">x</button>
             <button type="button" id="four" class="btn-styles btn-numbers" data-value="4" onclick="displayNumber(event)">4</button>
             <button type="button" id="five" class="btn-styles btn-numbers" data-value="5" onclick="displayNumber(event)">5</button>
             <button type="button" id="six" class="btn-styles btn-numbers" data-value="6" onclick="displayNumber(event)">6</button>
-            <button type="button" id="minus" class="btn-styles btn-operations">-</button>
+            <button type="button" id="minus" class="btn-styles btn-operations" data-value="-" onclick="startOperation(event)">-</button>
             <button type="button" id="one" class="btn-styles btn-numbers" data-value="1" onclick="displayNumber(event)">1</button>
             <button type="button" id="two" class="btn-styles btn-numbers" data-value="2" onclick="displayNumber(event)">2</button>
             <button type="button" id="three" class="btn-styles btn-numbers" data-value="3" onclick="displayNumber(event)">3</button>
-            <button type="button" id="add" class="btn-styles btn-operations">+</button>
+            <button type="button" id="plus" class="btn-styles btn-operations" data-value="+" onclick="startOperation(event)">+</button>
             <button type="button" id="negate" class="btn-styles btn-numbers" data-value="negate" onclick="negateDisplay()">+/-</button>
             <button type="button" id="zero" class="btn-styles btn-numbers" data-value="0" onclick="displayNumber(event)">0</button>
             <button type="button" id="comma" class="btn-styles btn-numbers" data-value="," onclick="displayNumber(event)">,</button>
-            <button type="button" id="equal" class="btn-styles equal">=</button>
+            <button type="button" id="equal" class="btn-styles equal" onclick="equalOperation()">=</button>
         </div>
     </main>
     
