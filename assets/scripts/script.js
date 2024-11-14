@@ -4,9 +4,6 @@ const percentage = document.getElementById('percentage');
 const clearEntry = document.getElementById('clear-entry');
 const clear = document.getElementById('clear');
 const deleteBtn = document.getElementById('delete');
-const oneDividedByBtn = document.getElementById('one-divided-by');
-const xSquaredBtn = document.getElementById('x-squared');
-const squareRootOfXBtn = document.getElementById('square-root-of-x');
 const divide = document.getElementById('divide');
 const seven = document.getElementById('seven');
 const eight = document.getElementById('eight');
@@ -20,7 +17,6 @@ const one = document.getElementById('one');
 const two = document.getElementById('two');
 const three = document.getElementById('three');
 const plus = document.getElementById('plus');
-const negate = document.getElementById('negate');
 const zero = document.getElementById('zero');
 const comma = document.getElementById('comma');
 const equal = document.getElementById('equal');
@@ -34,29 +30,13 @@ const operationsObj = {
     '**': num => Math.pow(num, 2),
     '///': num => Math.sqrt(num),
 };
-let operationCompleted = false;
+
+let isLastOperationCompleted = false;
 let operationHappening = false;
-let newInput = true;
+let isSecondNumberInput = true;
 let currentOperation = '';
-let num1 = -1;
+let num1 = 0;
 let num2 = 0;
-
-const resetInputOutputDisplay = () => {
-    updateInputOutputDisplay('0');
-}
-
-const resetDisplay = () => {
-    resetInputOutputDisplay()
-    operationsDisplay.textContent = '';
-}
-
-const resetOperationVariables = () => {
-    operationHappening = false;
-    newInput = true;
-    currentOperation = ''
-    num1 = 0;
-    num2 = 0;
-}
 
 const updateOperationDisplay = (text) => {
     operationsDisplay.textContent = text;
@@ -66,36 +46,61 @@ const updateInputOutputDisplay = (text) => {
     inputOutputDisplay.textContent = text;
 }
 
-const deleteNumber = () => {
-    updateInputOutputDisplay(inputOutputDisplay.textContent.slice(0, -1));
+const resetInputOutputDisplay = () => {
+    updateInputOutputDisplay('0');
+}
+
+const resetDisplay = () => {
+    resetInputOutputDisplay();
+    updateOperationDisplay();
+}
+
+const resetOperationVariables = () => {
+    operationHappening = false;
+    isSecondNumberInput = true;
+    currentOperation = ''
+    num1 = 0;
+    num2 = 0;
+}
+
+const isInputOutputEmpty = () => {
     if(inputOutputDisplay.textContent === '') {
         resetInputOutputDisplay();
     }
 }
 
+const getInputNumber = () => Number(commaToPoint(inputOutputDisplay.textContent));
+
+const deleteNumber = () => {
+    updateInputOutputDisplay(inputOutputDisplay.textContent.slice(0, -1));
+    isInputOutputEmpty()
+}
+
 const negateDisplay = () => {
-    if(inputOutputDisplay.textContent.includes(',')) {
-        const i = inputOutputDisplay.textContent.indexOf(',');
-        const numberWithoutDecimal = inputOutputDisplay.textContent.slice(0, i);
-        const negatedNumber = Number(numberWithoutDecimal) * (-1);
-        updateInputOutputDisplay(`${negatedNumber}${inputOutputDisplay.textContent.slice(i, inputOutputDisplay.textContent.length)}`);
+    if(inputOutputDisplay.textContent[0] === '-') {
+        updateInputOutputDisplay(inputOutputDisplay.textContent.slice(1))
     } else {
-        updateInputOutputDisplay(Number(inputOutputDisplay.textContent) * (-1))
+        updateInputOutputDisplay(`-${inputOutputDisplay.textContent}`);
+    }
+}
+
+const checkLastOperationCompleted = () => {
+    if(isLastOperationCompleted) {
+        resetDisplay();
+        isLastOperationCompleted = false;
     }
 }
 
 const displayNumber = (event) => {
     const dataValue = event.target.dataset.value;
-    if(operationCompleted) {
-        resetDisplay();
-        operationCompleted = false;
-    }
+    checkLastOperationCompleted();
 
-    if(inputOutputDisplay.textContent === '0' || newInput) {
+    if(inputOutputDisplay.textContent === '0' || isSecondNumberInput) {
         updateInputOutputDisplay(dataValue);
-        newInput = false;
+        isSecondNumberInput = false;
     } else {
-        if(inputOutputDisplay.textContent.includes(',') && dataValue === ','){
+        const isAlreadyDecimalNumber = inputOutputDisplay.textContent.includes(',') && dataValue === ',';
+        if(isAlreadyDecimalNumber){
             return;
         }
         updateInputOutputDisplay(inputOutputDisplay.textContent += dataValue);
@@ -113,17 +118,17 @@ const pointToComma = (num) => {
 const startOperation = (event) => {
     const dataValue = event.target.dataset.value;
     currentOperation = dataValue;
-    num1 = Number(commaToPoint(inputOutputDisplay.textContent));
+    num1 = getInputNumber();
     updateOperationDisplay(`${pointToComma(num1)} ${dataValue}`);
     updateInputOutputDisplay(pointToComma(String(num1)));
-    operationCompleted = false;
+    isLastOperationCompleted = false;
     operationHappening = true;
-    newInput = true;
+    isSecondNumberInput = true;
 }
 
 const equalOperation = () => {
     if(operationHappening) {
-        num2 = Number(commaToPoint(inputOutputDisplay.textContent));
+        num2 = getInputNumber();
         const result = operationsObj[currentOperation](num1, num2);
 
         if(result === 'e') {
@@ -133,13 +138,13 @@ const equalOperation = () => {
         updateOperationDisplay(`${operationsDisplay.textContent} ${pointToComma(num2)}`);
         updateInputOutputDisplay(pointToComma(result));
         resetOperationVariables();
-        operationCompleted = true;
+        isLastOperationCompleted = true;
     }
 }
 
 const oneDividedBy = () => {
     num1 = 1;
-    num2 = Number(inputOutputDisplay.textContent)
+    num2 = getInputNumber();
 
     if(num2 !== 0) {
         result = operationsObj['/'](num1, num2);
@@ -148,20 +153,23 @@ const oneDividedBy = () => {
     }
 
     resetOperationVariables();
+    isLastOperationCompleted = true;
 }
 
 const xSquared = () => {
-    const num = Number(commaToPoint(inputOutputDisplay.textContent));
+    const num = getInputNumber();
     const result = operationsObj['**'](num);
     updateOperationDisplay(`sqr(${inputOutputDisplay.textContent})`);
     updateInputOutputDisplay(pointToComma(result));
+    isLastOperationCompleted = true;
 }
 
 const squareRootOfX = () => {
-    const num = Number(commaToPoint(inputOutputDisplay.textContent));
+    const num = getInputNumber();
     const result = operationsObj['///'](num);
     updateOperationDisplay(`√(${inputOutputDisplay.textContent})`);
     updateInputOutputDisplay(pointToComma(result));
+    isLastOperationCompleted = true;
 }
 
 clear.addEventListener('click', () => {
