@@ -17,10 +17,10 @@
             <!-- <div id="input-output-display" class="input-output">-7.833.366.696.467.241</div> -->
         </div>
         <div class="btn-container">
-            <button type="button" id="percentage" class="btn-styles btn-operations">%</button>
-            <button type="button" id="clear-entry" class="btn-styles btn-operations">CE</button>
+            <button type="button" id="percentage" class="btn-styles btn-operations" data-value="%">%</button>
+            <button type="button" id="clear-entry" class="btn-styles btn-operations" data-value="Delete">CE</button>
             <button type="button" id="clear" class="btn-styles btn-operations">C</button>
-            <button type="button" id="delete" class="btn-styles btn-operations"><i class="fa-solid fa-delete-left" onclick="deleteNumber()"></i></button>
+            <button type="button" id="delete" class="btn-styles btn-operations" data-value="Backspace" onclick="deleteNumber()"><i class="fa-solid fa-delete-left"></i></button>
             <button type="button" id="one-divided-by" class="btn-styles btn-operations">¹/×</button>
             <button type="button" id="x-squared" class="btn-styles btn-operations">×²</button>
             <button type="button" id="square-root-of-x" class="btn-styles btn-operations">²√×</button>
@@ -40,7 +40,7 @@
             <button type="button" id="negate" class="btn-styles btn-numbers" data-value="negate" onclick="negateDisplay()">+/-</button>
             <button type="button" id="zero" class="btn-styles btn-numbers" data-value="0" onclick="displayNumber(event)">0</button>
             <button type="button" id="comma" class="btn-styles btn-numbers" data-value="," onclick="displayNumber(event)">,</button>
-            <button type="button" id="equal" class="btn-styles equal" onclick="equalOperation()">=</button>
+            <button type="button" id="equal" class="btn-styles equal" data-value="Enter" onclick="equalOperation()">=</button>
         </div>
     </main>
     

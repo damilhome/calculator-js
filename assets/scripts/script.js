@@ -24,6 +24,8 @@ const negate = document.getElementById('negate');
 const zero = document.getElementById('zero');
 const comma = document.getElementById('comma');
 const equal = document.getElementById('equal');
+const btnKeys = [percentage, clearEntry, deleteBtn, divide, multiply, plus, minus, equal, nine, eight, seven, six, five, four, three, two, one, zero, comma];
+const keys = ['%', 'Delete', 'Backspace', '/', '*', '+', '-', 'Enter', '9', '8', '7', '6', '5', '4', '3', '2', '1', '0', ','];
 const operationsObj = {
     '+': (num1, num2) => num1 + num2,
     '-': (num1, num2) => num1 - num2,
@@ -37,10 +39,31 @@ let currentOperation = '';
 let num1 = -1;
 let num2 = 0;
 
+const resetInputOutputDisplay = () => {
+    inputOutputDisplay.textContent = '0';
+}
+
+const resetDisplay = () => {
+    resetInputOutputDisplay()
+    operationsDisplay.textContent = '';
+}
+
+const resetOperationVariables = () => {
+    operationHappening = false;
+    newInput = true;
+    currentOperation = ''
+    num1 = 0;
+    num2 = 0;
+}
+
+const updateOperationDisplay = (text) => {
+    operationsDisplay.textContent = text;
+}
+
 const deleteNumber = () => {
     inputOutputDisplay.textContent = inputOutputDisplay.textContent.slice(0, -1);
     if(inputOutputDisplay.textContent === '') {
-        inputOutputDisplay.textContent = 0;
+        resetInputOutputDisplay();
     }
 }
 
@@ -53,11 +76,6 @@ const negateDisplay = () => {
     } else {
         inputOutputDisplay.textContent = Number(inputOutputDisplay.textContent) * (-1);
     }
-}
-
-const resetDisplay = () => {
-    inputOutputDisplay.textContent = '0';
-    operationsDisplay.textContent = '';
 }
 
 const displayNumber = (event) => {
@@ -78,10 +96,6 @@ const displayNumber = (event) => {
     }
 }
 
-const updateOperationDisplay = (text) => {
-    operationsDisplay.textContent = text;
-}
-
 const startOperation = (event) => {
     const dataValue = event.target.dataset.value;
     currentOperation = dataValue;
@@ -90,14 +104,6 @@ const startOperation = (event) => {
     operationCompleted = false;
     operationHappening = true;
     newInput = true;
-}
-
-const resetOperationVariables = () => {
-    operationHappening = false;
-    newInput = true;
-    currentOperation = ''
-    num1 = 0;
-    num2 = 0;
 }
 
 const equalOperation = () => {
@@ -121,6 +127,14 @@ clear.addEventListener('click', () => {
     resetDisplay();
 })
 
-clearEntry.addEventListener('click', () => {
-    inputOutputDisplay.textContent = 0;
-});
+clearEntry.addEventListener('click', resetInputOutputDisplay);
+
+document.body.addEventListener('keydown', (event) => {
+    if(keys.includes(event.key)) {
+        btnKeys.forEach(key => {
+            if(key.dataset.value === event.key) {
+                key.click();
+            }
+        })
+    }
+})
