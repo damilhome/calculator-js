@@ -25,6 +25,11 @@ const zero = document.getElementById('zero');
 const comma = document.getElementById('comma');
 const equal = document.getElementById('equal');
 
+const negateDisplay = () => {
+    console.log('negate display');
+    inputOutputDisplay.textContent = Number(inputOutputDisplay.textContent) * (-1)
+}
+
 const displayNumber = (event) => {
     dataValue = event.target.dataset.value;
     if(inputOutputDisplay.textContent === '0') {
