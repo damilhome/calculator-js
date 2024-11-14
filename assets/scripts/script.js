@@ -6,7 +6,7 @@ const clear = document.getElementById('clear');
 const deleteBtn = document.getElementById('delete');
 const oneDividedByBtn = document.getElementById('one-divided-by');
 const xSquaredBtn = document.getElementById('x-squared');
-const squareRootOfX = document.getElementById('square-root-of-x');
+const squareRootOfXBtn = document.getElementById('square-root-of-x');
 const divide = document.getElementById('divide');
 const seven = document.getElementById('seven');
 const eight = document.getElementById('eight');
@@ -31,7 +31,8 @@ const operationsObj = {
     '-': (num1, num2) => num1 - num2,
     '*': (num1, num2) => num1 * num2,
     '/': (num1, num2) => num2 !== 0 ? num1 / num2 : 'e',
-    '**': (num) => Math.pow(num, 2)
+    '**': num => Math.pow(num, 2),
+    '///': num => Math.sqrt(num),
 };
 let operationCompleted = false;
 let operationHappening = false;
@@ -153,6 +154,13 @@ const xSquared = () => {
     const num = Number(commaToPoint(inputOutputDisplay.textContent));
     const result = operationsObj['**'](num);
     updateOperationDisplay(`sqr(${inputOutputDisplay.textContent})`);
+    updateInputOutputDisplay(pointToComma(result));
+}
+
+const squareRootOfX = () => {
+    const num = Number(commaToPoint(inputOutputDisplay.textContent));
+    const result = operationsObj['///'](num);
+    updateOperationDisplay(`√(${inputOutputDisplay.textContent})`);
     updateInputOutputDisplay(pointToComma(result));
 }
 
