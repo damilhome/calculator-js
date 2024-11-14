@@ -29,7 +29,7 @@ const operationsObj = {
     '-': (num1, num2) => num1 - num2,
     '*': (num1, num2) => num1 * num2,
     '/': (num1, num2) => num2 !== 0 ? num1 / num2 : 'e'
-}
+};
 let operationCompleted = false;
 let operationHappening = false;
 let newInput = true;
@@ -45,8 +45,14 @@ const deleteNumber = () => {
 }
 
 const negateDisplay = () => {
-    console.log('negate display');
-    inputOutputDisplay.textContent = Number(inputOutputDisplay.textContent) * (-1)
+    if(inputOutputDisplay.textContent.includes(',')) {
+        const i = inputOutputDisplay.textContent.indexOf(',');
+        const numberWithoutDecimal = inputOutputDisplay.textContent.slice(0, i);
+        const negatedNumber = Number(numberWithoutDecimal) * (-1);
+        inputOutputDisplay.textContent = `${negatedNumber}${inputOutputDisplay.textContent.slice(i, inputOutputDisplay.textContent.length)}`;
+    } else {
+        inputOutputDisplay.textContent = Number(inputOutputDisplay.textContent) * (-1);
+    }
 }
 
 const resetDisplay = () => {
@@ -57,7 +63,7 @@ const resetDisplay = () => {
 const displayNumber = (event) => {
     const dataValue = event.target.dataset.value;
     if(operationCompleted) {
-        resetDisplay()
+        resetDisplay();
         operationCompleted = false;
     }
 
@@ -103,9 +109,9 @@ const equalOperation = () => {
             return;
         }
     
-        updateOperationDisplay(`${operationsDisplay.textContent} ${num2}`)
+        updateOperationDisplay(`${operationsDisplay.textContent} ${num2}`);
         inputOutputDisplay.textContent = result;
-        resetOperationVariables()
+        resetOperationVariables();
         operationCompleted = true;
     }
 }
@@ -116,5 +122,5 @@ clear.addEventListener('click', () => {
 })
 
 clearEntry.addEventListener('click', () => {
-    inputOutputDisplay.textContent = 0
+    inputOutputDisplay.textContent = 0;
 });
