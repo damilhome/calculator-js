@@ -50,7 +50,7 @@ const negateDisplay = () => {
 }
 
 const resetDisplay = () => {
-    inputOutputDisplay.textContent = '';
+    inputOutputDisplay.textContent = '0';
     operationsDisplay.textContent = '';
 }
 
@@ -86,8 +86,7 @@ const startOperation = (event) => {
     newInput = true;
 }
 
-const restartOperationVariables = () => {
-    operationCompleted = true;
+const resetOperationVariables = () => {
     operationHappening = false;
     newInput = true;
     currentOperation = ''
@@ -106,6 +105,16 @@ const equalOperation = () => {
     
         updateOperationDisplay(`${operationsDisplay.textContent} ${num2}`)
         inputOutputDisplay.textContent = result;
-        restartOperationVariables()
+        resetOperationVariables()
+        operationCompleted = true;
     }
 }
+
+clear.addEventListener('click', () => {
+    resetOperationVariables();
+    resetDisplay();
+})
+
+clearEntry.addEventListener('click', () => {
+    inputOutputDisplay.textContent = 0
+});
